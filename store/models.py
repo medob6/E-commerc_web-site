@@ -52,7 +52,7 @@ class Address(models.Model):
 
 
 class Customer(models.Model):
-    name = models.CharField(max_length=50)
+    given_name = models.CharField(max_length=50)
     email = models.EmailField()
     password = models.CharField(max_length=50)
     phone = models.CharField(max_length=50)
