@@ -56,4 +56,3 @@ class Customer(models.Model):
     email = models.EmailField()
     password = models.CharField(max_length=50)
     phone = models.CharField(max_length=50)
-    address = models.OneToOneField(Address, on_delete=models.CASCADE)
