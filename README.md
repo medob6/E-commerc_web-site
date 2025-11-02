@@ -179,7 +179,3 @@ python manage.py test
 ## Notes / tips
 - A simple hello view is implemented at `store.views.say_hello` and routed in `store.urls`.
 - If you use MySQL in development, ensure `default-libmysqlclient-dev` is installed and the proper DB credentials are in settings or environment variables.
-- If you prefer, I can:
-  - add a `.env.example`,
-  - switch settings to sqlite for quick local dev,
-  - or add CI/test job examples.
