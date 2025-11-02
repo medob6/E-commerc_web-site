@@ -1,4 +1,4 @@
-# Storefont / e_commerec
+## Storefont / e_commerec
 
 Small Django project with two apps: `store` (products, reviews, customers, addresses) and `tags` (generic tagging).
 
