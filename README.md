@@ -1,181 +1,126 @@
-## Storefont / e_commerec
+## E-commerce Store API (Django + DRF)
 
-Small Django project with two apps: `store` (products, reviews, customers, addresses) and `tags` (generic tagging).
+Django REST API backend for a simple e-commerce store with **products**, **users**, **orders**, and **authentication**.
 
-## Quick links
-- Project entry: [manage.py](manage.py)
-- Settings: [`storefont.settings`](storefont/settings.py)
-- Local sqlite snapshot (optional): [db.sqlite3](db.sqlite3)
-- Dependency manifest: [Pipfile](Pipfile)
+> Note: This repository’s README previously contained duplicated content and some outdated references. It has been cleaned up and simplified.
 
-App overview
-- Store app models: [`store.models`](store/models.py) — Category, Product, Review, Address, Customer
-- Store views: [`store.views.say_hello`](store/views.py)
-- Store URLs: [`store.urls`](store/urls.py)
-- Template: [store/templates/hello.html](store/templates/hello.html)
-- Migrations: `store/migrations/`
+---
 
-Tags app
-- Models: [`tags.models.Tag`](tags/models.py), [`tags.models.TaggedItem`](tags/models.py)
-- Admin & migrations: `tags/admin.py`, `tags/migrations/`
+## Features
 
-## Prerequisites (Debian)
-Recommended: Debian-based system (apt). Install system packages and Python tools:
+- Products & categories
+- User authentication
+- Orders
+- Admin panel
+
+## Tech stack
+
+- Python / Django
+- Django REST Framework
+- SQLite (dev) or MySQL (optional)
+
+---
+
+## Project structure (high level)
+
+- `manage.py` — Django entry point
+- `storefont/settings.py` — project settings
+- `store/` — store app (products, customers, addresses, etc.)
+- `tags/` — generic tagging app
+
+---
+
+## Quick start (local development)
+
+### 1) Prerequisites
+
+- Python 3.10+ recommended
+- `pip` and `venv` (or `pipenv`)
+
+On Debian/Ubuntu:
+
 ```sh
 sudo apt update
 sudo apt install -y python3 python3-venv python3-pip build-essential
 # optional for MySQL backend:
 sudo apt install -y default-libmysqlclient-dev
 ```
-Install pipenv (optional) or use venv:
-```sh
-# pipenv (user install)
-python3 -m pip install --user pipenv
-export PATH="$HOME/.local/bin:$PATH"
 
-# or create a virtualenv
+### 2) Create a virtual environment
+
+Using `venv`:
+
+```sh
 python3 -m venv .venv
 source .venv/bin/activate
+python -m pip install --upgrade pip
 ```
 
-## Install dependencies
-Using Pipfile / pipenv:
+Or using `pipenv`:
+
 ```sh
+python3 -m pip install --user pipenv
+export PATH="$HOME/.local/bin:$PATH"
 pipenv install --dev
 pipenv shell
 ```
-Or using venv and pip (if you convert Pipfile to requirements):
+
+### 3) Install dependencies
+
+If you are using `pipenv`, dependencies are installed in the previous step.
+
+If you are using `pip` + `requirements.txt` (if present in your repo):
+
 ```sh
 pip install -r requirements.txt
 ```
 
-## Database (quick dev using sqlite)
-The project settings are configured for MySQL by default. To use the included sqlite snapshot or run quickly with sqlite, edit `storefont/settings.py` and set DATABASES like:
+### 4) Configure the database
+
+By default, Django often uses SQLite for development. If your project is configured for MySQL by default and you want to run quickly on SQLite, update `storefont/settings.py`:
+
 ```py
-# filepath: storefont/settings.py
-# ...existing code...
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-# ...existing code...
 ```
-Or remove/comment MySQL settings and set the above.
 
-## Common commands
-Run migrations:
+### 5) Run migrations and start the server
+
 ```sh
 python manage.py migrate
-```
-Create a superuser:
-```sh
 python manage.py createsuperuser
-```
-Run dev server:
-```sh
 python manage.py runserver
 ```
-Run tests:
-```sh
-python manage.py test
-```
 
-## Notes / tips
-- A simple hello view is implemented at `store.views.say_hello` and routed in `store.urls`.
-- If you use MySQL in development, ensure `default-libmysqlclient-dev` is installed and the proper DB credentials are in settings or environment variables.
-- If you prefer, I can:
-  - add a `.env.example`,
-  - switch settings to sqlite for quick local dev,
-  - or add CI/test job examples.
-
-```// filepath: /home/mbousset/e_commerec/Readme
-// ...existing code...
-# Storefont / e_commerec
-
-Small Django project with two apps: `store` (products, reviews, customers, addresses) and `tags` (generic tagging).
-
-## Quick links
-- Project entry: [manage.py](manage.py)
-- Settings: [`storefont.settings`](storefont/settings.py)
-- Local sqlite snapshot (optional): [db.sqlite3](db.sqlite3)
-- Dependency manifest: [Pipfile](Pipfile)
-
-App overview
-- Store app models: [`store.models`](store/models.py) — Category, Product, Review, Address, Customer
-- Store views: [`store.views.say_hello`](store/views.py)
-- Store URLs: [`store.urls`](store/urls.py)
-- Template: [store/templates/hello.html](store/templates/hello.html)
-- Migrations: `store/migrations/`
-
-Tags app
-- Models: [`tags.models.Tag`](tags/models.py), [`tags.models.TaggedItem`](tags/models.py)
-- Admin & migrations: `tags/admin.py`, `tags/migrations/`
-
-## Prerequisites (Debian)
-Recommended: Debian-based system (apt). Install system packages and Python tools:
-```sh
-sudo apt update
-sudo apt install -y python3 python3-venv python3-pip build-essential
-# optional for MySQL backend:
-sudo apt install -y default-libmysqlclient-dev
-```
-Install pipenv (optional) or use venv:
-```sh
-# pipenv (user install)
-python3 -m pip install --user pipenv
-export PATH="$HOME/.local/bin:$PATH"
-
-# or create a virtualenv
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-## Install dependencies
-Using Pipfile / pipenv:
-```sh
-pipenv install --dev
-pipenv shell
-```
-Or using venv and pip (if you convert Pipfile to requirements):
-```sh
-pip install -r requirements.txt
-```
-
-## Database (quick dev using sqlite)
-The project settings are configured for MySQL by default. To use the included sqlite snapshot or run quickly with sqlite, edit `storefont/settings.py` and set DATABASES like:
-```py
-# filepath: storefont/settings.py
-# ...existing code...
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-# ...existing code...
-```
-Or remove/comment MySQL settings and set the above.
+---
 
 ## Common commands
-Run migrations:
+
 ```sh
+# run tests
+python manage.py test
+
+# create migrations
+python manage.py makemigrations
+
+# apply migrations
 python manage.py migrate
 ```
-Create a superuser:
-```sh
-python manage.py createsuperuser
-```
-Run dev server:
-```sh
-python manage.py runserver
-```
-Run tests:
-```sh
-python manage.py test
-```
 
-## Notes / tips
-- A simple hello view is implemented at `store.views.say_hello` and routed in `store.urls`.
-- If you use MySQL in development, ensure `default-libmysqlclient-dev` is installed and the proper DB credentials are in settings or environment variables.
+---
+
+## API documentation
+
+If you have Swagger/OpenAPI enabled, add the URL here (for example `/swagger/` or `/api/schema/swagger-ui/`).
+
+---
+
+## Contributing
+
+1. Fork the repo
+2. Create a feature branch
+3. Open a pull request
